@@ -1,0 +1,12 @@
+body {
+	font-family: sans-serif;
+	padding-top: 54px;
+	/* Margin bottom by footer height */
+  	margin-bottom: 60px;
+}
+ 
+@media (min-width: 992px) {
+	body {
+	  padding-top: 56px;
+	}
+} 

@@ -1,0 +1,73 @@
+<div th:fragment="topicLabel">
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h2>Topics Label</h2></div>
+			
+			<div class="panel-body">
+			
+				  <div>
+				  	    <div th:if="${not #lists.isEmpty(topicLabelList)}">
+				        <h2>Product List</h2>
+					        <table class="table table-striped">
+					            <tr>
+					                <th>Id</th>
+					                <th>Name</th>
+					                <th>Description</th>					               
+					                <th>List</th>
+					                <th>Edit</th>
+					            </tr>
+					      		<tr th:each="topicLabel : ${topicLabelList}">
+					                <td th:text="${topicLabel.id}"></td>
+					                <td th:text="${topicLabel.name}"></td>
+					                <td th:text="${topicLabel.description}"></td>					                
+					                <td><a th:href="${'/topicLabel/show/' + topicLabel.id}">View</a> </td>
+					                <td><a th:href="${'/topicLabel/edit/' + topicLabel.id}">Edit</a> </td>
+					            </tr>
+					        </table>					        
+    					</div>
+				  </div>
+				  <div>
+				  	<h3>Add a unique topic here:</h3>
+					  <form class="form-horizontal" th:object="${topicLabelForm}" th:action="@{/topicLabel}" method="post">
+			
+			            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+			                <p th:text="#{form.hasErrors}">Error Message</p>
+			            </div>
+			
+			            <input type="hidden" th:field="*{id}"/>
+			            
+			            <div class="form-group" th:class="${#fields.hasErrors('name')} ? 'form-group has-error' : 'form-group'">
+			                <label class="col-sm-2 control-label">Name:</label>
+			                <div class="col-sm-10">
+			                    <input type="text" class="form-control" th:field="*{name}" th:errorclass="has-error"/>
+			
+			                    <span class="help-block">
+			                       <ul>
+			                           <li th:each="err : ${#fields.errors('name')}" th:text="${err}" />
+			                       </ul>
+			                    </span>
+			                </div>
+			            </div>
+			            
+			
+			            <div class="form-group" th:class="${#fields.hasErrors('description')} ? 'form-group has-error' : 'form-group'">
+			                <label class="col-sm-2 control-label">Description:</label>
+			                <div class="col-sm-10">
+								<textarea class="form-control" rows="5" th:field="*{description}" th:errorclass="has-error"></textarea>
+			                    <span class="help-block">
+			                       <ul>
+			                           <li th:each="err : ${#fields.errors('description')}" th:text="${err}" />
+			                       </ul>
+			                    </span>
+			                </div>
+			            </div>
+			
+			            <div>
+			                <button type="submit" class="btn btn-default">Submit</button>
+			            </div>
+			        </form>
+				  </div>			  
+			</div>
+		</div>
+	</div>
+</div>

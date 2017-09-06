@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Sep 05 22:51:52 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015e-5519-de0d-0000184ac448 
+on database directory /home/sonic/spring_workspace/topic_web/eod_db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/home/sonic/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_131-b11
+user.dir=/home/sonic/spring_workspace/topic_web
+os.name=Linux
+os.arch=amd64
+os.version=4.4.0-93-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -1,0 +1,25 @@
+<div th:fragment="dynamicTopics">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Dynamic Topics</h2>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<input id="dynamicRangeSlider" class="col-md-8" type="text" data-slider-min="10" data-slider-max="50" data-slider-step="2" data-slider-value="26"/>
+				<span id="ex6CurrentSliderValLabel">Dynamic Topic Number (k): <span id="ex6SliderVal">26</span></span>
+			</div>
+			<div class="row">
+				<table id="topicTable" class="display" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Topic label</th>
+							<th>Topics words</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+
+		</div>
+	</div>
+</div>

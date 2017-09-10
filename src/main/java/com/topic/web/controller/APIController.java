@@ -58,7 +58,12 @@ public class APIController {
 		
 		for (Topic topic : topicService.getDynamicTopicByk(Integer.parseInt(value))) {
 			logger.info("Dynamic topic found: " + topic.toString());
-			resutls.add(Arrays.asList(topic.getWindowBin() + "_" + topic.getK(), topic.getDescription()));
+			String topicKey = topic.getWindowBin() + "_" + topic.getK();
+			if (topic.getLable() != null)
+				resutls.add(Arrays.asList(topic.getLable().getName(), href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
+			else
+				resutls.add(Arrays.asList(topicKey, href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
+			
 		}
 
 		return resutls;
@@ -69,16 +74,18 @@ public class APIController {
 	public List<String> getTopicWindows() throws Exception {
 //		tf_idf_tokenized_window_2017_04_windowtopics_k24_top30_terms
 		List<String> results = new ArrayList<String>();
-
-		File[] files = new File("/home/sonic/sonic/eosdb/dynamic_nmf/data/windowbin/csv/").listFiles();
 		
-		for (File file : files) {
-		    if (file.isFile() && (file.getName().contains("tf_idf_tokenized_window") && file.getName().endsWith("terms.csv"))) {
-				String window = file.getName().replace("tf_idf_tokenized_window_", "").substring(0, 7);
-				String k = file.getName().substring(file.getName().length() - 18, file.getName().length() - 16);
-				results.add(window + "_" + k);
-		    }
+		List <Topic> topicList = topicService.listAllTopics();
+		
+		String topicKey = "";
+		for (Topic topic : topicList) {
+			if (topic.getWindowBin().equalsIgnoreCase(TopicController.DYNAMIC))
+				continue;
+			topicKey = topic.getWindowBin() + "_" + topic.getK();
+			if (!results.contains(topicKey))
+				results.add(topicKey);
 		}
+
 		Collections.sort(results);
 		return results;
 	}

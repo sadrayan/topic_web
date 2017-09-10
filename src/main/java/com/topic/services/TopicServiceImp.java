@@ -85,6 +85,13 @@ public class TopicServiceImp implements TopicService {
 		
 		return null;
 	}
+
+	@Override
+	public List<Topic> listAllTopics() {
+		List<Topic> topicList = new ArrayList<>();
+		topicRepo.findAll().forEach(topicList::add);
+		return topicList;
+	}
 	
 	
 

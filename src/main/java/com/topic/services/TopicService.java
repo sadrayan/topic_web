@@ -12,6 +12,8 @@ public interface TopicService {
 	TopicLabel saveLabel (TopicLabelDto topicLableDto);
 	
 	List<TopicLabel> listAll();
+	
+	List<Topic> listAllTopics();
 
 	TopicLabel getById(Long id);
 	

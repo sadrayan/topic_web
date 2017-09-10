@@ -70,7 +70,17 @@ $("#dynamicRangeSlider").on("slide", function(slideEvt) {
         	$("#topicTable").dataTable().fnDestroy();
      	  	$('#topicTable').DataTable( {
     		  data: data,
-              paging: false
+              paging: false,columnDefs: [
+                  {
+                      targets:1,
+                      render: function ( data, type, row, meta ) {
+                          if(type === 'display'){
+                              data = '<a href="' + data + '">Add Label</a>';
+                          }
+                          return data;
+                      }
+                  }
+              ]
      	  	})
         }
     });

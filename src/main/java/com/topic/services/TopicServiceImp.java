@@ -52,6 +52,12 @@ public class TopicServiceImp implements TopicService {
 			logger.info(topic.toString());*/
 		return topicList;
 	}
+	
+	public List<Topic> getWindowTopic (String window) {
+		List <Topic> topicList = topicRepo.findBywindowBin(window);
+		
+		return topicList;
+	}
 
 	@Override
 	public List<Topic> getDynamicTopicByk(int k) {

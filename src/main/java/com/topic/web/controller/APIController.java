@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topic.domain.Topic;
+import com.topic.domain.TopicLabel;
+import com.topic.dto.TopicDto;
 import com.topic.services.TopicService;
 
 import java.io.File;
@@ -35,15 +37,15 @@ public class APIController {
 		logger.info(value);
 		List <List<String>> resutls = new ArrayList<>();
 		String window = value.substring(0 ,7);
-		String k = value.substring(8, 10);
+//		String k = value.substring(8, 10);
 		
-		for (Topic topic : topicService.getWindowTopicByk(window, Integer.parseInt(k))) {
+		for (Topic topic : topicService.getWindowTopic(window)) {
 			logger.info("Window topic found: " + topic.toString());
 			String topicKey = topic.getWindowBin() + "_" + topic.getK();
 			if (topic.getLable() != null)
 				resutls.add(Arrays.asList(topic.getLable().getName(), href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
 			else
-				resutls.add(Arrays.asList(topicKey, href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
+				resutls.add(Arrays.asList(topicKey, topic.getId().toString(), topic.getDescription()));
 		}
 
 		return resutls;
@@ -60,9 +62,9 @@ public class APIController {
 			logger.info("Dynamic topic found: " + topic.toString());
 			String topicKey = topic.getWindowBin() + "_" + topic.getK();
 			if (topic.getLable() != null)
-				resutls.add(Arrays.asList(topic.getLable().getName(), href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
+				resutls.add(Arrays.asList(topic.getLable().getName(), topic.getId().toString(), topic.getDescription()));
 			else
-				resutls.add(Arrays.asList(topicKey, href.replace("{topicKey}", topic.getId().toString()), topic.getDescription()));
+				resutls.add(Arrays.asList(topicKey, topic.getId().toString(), topic.getDescription()));
 			
 		}
 
@@ -90,6 +92,17 @@ public class APIController {
 		return results;
 	}
 	
+	@RequestMapping(value = "api/topic", method = RequestMethod.POST)
+	public void saveOrUpdatetopic(@RequestParam("topicID") String topicID, @RequestParam("topicLabelId") String topicLabelId) {
+		logger.info("Assigning topic label: " + topicLabelId + " to topicID: " + topicID);
+		
+		TopicDto topicDto = new TopicDto();
+		topicDto.setId(Long.parseLong(topicID));
+		topicDto.setTopicLabelId(Long.parseLong(topicLabelId));
+		
+		TopicLabel savedTopicLabel = topicService.assignTopicLabel(topicDto);
+
+	}
 	
 	
 }

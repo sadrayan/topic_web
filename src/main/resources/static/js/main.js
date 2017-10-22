@@ -1,33 +1,52 @@
-$(document).ready(function() {
-	
-/*	$.get( "api/topics", function( data ) {
-	  //	  alert( "Data Loaded: " + data );
-	  $('#topicTable').DataTable( {
-		  data: data
-	  });
-	});*/
-	
-	$('#topicTable').hide();
+function setTopic(topicValue) {
+//	alert(topicValue);
+	$("#topicID").val(topicValue);
+}
 
 	
+function assignTopic () {
+	topicID = $("#topicID").val();
+	topicLabelId = $("#topicLabelId").val();
+//	alert(topicID + "   topicLabelID: " + topicLabelId);
+	if (topicLabelId==0) {
+		alert('missing label');
+		return;
+	}
+    $.ajax({
+        url: "api/topic",
+        type: "POST",
+        data: { "topicID" : topicID, "topicLabelId" : topicLabelId },
+        success: function(data){
+//        	alert('got it!');
+        	$('#myModal').modal('toggle');
+        	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+        	    $("#success-alert").slideUp(500);
+        	});
+        	$("#topicLabelId").val("0");
+        }
+    });
+}
+
+$(document).ready(function() {
+		
+	$('#topicTable').hide();	
+	$("#success-alert").hide();
 	
-	$.ajax({
-	    url:'api/windows',
-	    type:'GET',
-	    dataType: 'json',
-	    success: function( json ) {
-	        $.each(json, function(i, value) {
-	            $('#topicWindowsSelect').append($('<option>').text(value).attr('data-tokens', value));
-	        });
-	    }
+	// Datepicker
+	$('#topicWindowDatePicker').datepicker({
+	    startDate: "2012_01",
+	    format: "yyyy_mm",
+	    startView: 1,
+	    minViewMode: 1
 	});
 	
-	
-	$('#topicWindowsSelect').change(function(){
-	    $.ajax({
+	$('#topicWindowDatePicker').on('changeDate', function() {
+		date = $('#topicWindowDatePicker').datepicker('getFormattedDate')
+		
+		$.ajax({
 	        url: "api/topics",
 	        type: "POST",
-	        data: { "value": $("#topicWindowsSelect").val() },
+	        data: { "value": date },
 	        dataType:"json",
 	        type: "post",
 	        success: function(data){
@@ -41,7 +60,9 @@ $(document).ready(function() {
                           targets:1,
                           render: function ( data, type, row, meta ) {
                               if(type === 'display'){
-                                  data = '<a href="' + data + '">Add Label</a>';
+                  				  data = '<button type="button" class="btn btn-primary btn-sm"  onclick="setTopic(' + data + ')" data-toggle="modal" data-target="#myModal">' +
+                  					  'Assign Label</button>';
+                  				
                               }
                               return data;
                           }
@@ -50,7 +71,10 @@ $(document).ready(function() {
 	     	  	})
 	        }
 	    });
+
 	});
+	
+	
 
         
 } );
@@ -75,7 +99,8 @@ $("#dynamicRangeSlider").on("slide", function(slideEvt) {
                       targets:1,
                       render: function ( data, type, row, meta ) {
                           if(type === 'display'){
-                              data = '<a href="' + data + '">Add Label</a>';
+              				  data = '<button type="button" class="btn btn-primary btn-sm"  onclick="setTopic(' + data + ')" data-toggle="modal" data-target="#myModal">' +
+          					  'Assign Label</button>';
                           }
                           return data;
                       }
@@ -85,4 +110,6 @@ $("#dynamicRangeSlider").on("slide", function(slideEvt) {
         }
     });
 });
+
+
 

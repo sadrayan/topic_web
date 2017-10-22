@@ -9,6 +9,18 @@
 				<input id="dynamicRangeSlider" class="col-md-8" type="text" data-slider-min="10" data-slider-max="50" data-slider-step="2" data-slider-value="26"/>
 				<span id="ex6CurrentSliderValLabel">Dynamic Topic Number (k): <span id="ex6SliderVal">26</span></span>
 			</div>
+			
+			<div class="alert alert-success" id="success-alert">
+			    <strong>Successfully save topic label! </strong>
+			</div>
+			
+			<div th:replace="fragments/topicEdit :: topicEdit"></div>
+
+			
+			<input type="hidden" id="topicID" name="topicID" value="" />
+			<input type="hidden" id="topicLabelID" name="topicLabelID" value="" />
+			
+			
 			<div class="row">
 				<table id="topicTable" class="display" cellspacing="0" width="100%">
 					<thead>

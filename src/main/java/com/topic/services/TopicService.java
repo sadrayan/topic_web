@@ -15,6 +15,7 @@ public interface TopicService {
 	
 	List<Topic> listAllTopics();
 
+	List<Topic> getWindowTopic (String window);
 	TopicLabel getById(Long id);
 	
 	Topic getTopicById(Long id);

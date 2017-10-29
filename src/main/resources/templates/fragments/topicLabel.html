@@ -13,14 +13,12 @@
 					                <th>Id</th>
 					                <th>Name</th>
 					                <th>Description</th>					               
-					                <th>List</th>
 					                <th>Edit</th>
 					            </tr>
 					      		<tr th:each="topicLabel : ${topicLabelList}">
 					                <td th:text="${topicLabel.id}"></td>
 					                <td th:text="${topicLabel.name}"></td>
-					                <td th:text="${topicLabel.description}"></td>					                
-					                <td><a th:href="${'/topicLabel/show/' + topicLabel.id}">View</a> </td>
+					                <td th:text="${topicLabel.description}"></td>					            
 					                <td><a th:href="${'/topicLabel/edit/' + topicLabel.id}">Edit</a> </td>
 					            </tr>
 					        </table>					        
